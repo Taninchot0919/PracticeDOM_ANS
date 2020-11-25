@@ -74,8 +74,14 @@ let profiles = [
 
 //Show active current Person and move previous back to thumbnail
 //Show next person
+let nextButton = document.querySelector('.next-btn');
+nextButton.addEventListener('click',nextTo);
 //Show previous person
+let prevButton = document.querySelector('.prev-btn');
+prevButton.addEventListener('click',backTo);
 //Show random person
+let surpriseButton = document.querySelector('.surprised-btn');
+surpriseButton.addEventListener('click', randomPerson);
 //Search staff name
 
 
@@ -83,4 +89,46 @@ function onlyAlpha(event) {
     let letterCode = event.keyCode;
     if (letterCode > 31 && (letterCode < 48 || letterCode > 57)) return true;
     return false;
+}
+
+function randomPerson() {
+    let randNum = Math.floor(Math.random() * 5);
+    console.log(randNum);
+    let lectId = document.getElementById('lect');
+    let imgId = document.getElementById('img-container');
+    let academicId = document.getElementById('academic');
+    let teachingId = document.getElementById('teaching');
+
+    lectId.innerHTML = profiles[randNum].lect;
+    imgId.setAttribute('src', profiles[randNum].img);
+
+    //Academic
+    for (let i = 0; i = academicId.childElementCount; i++) {
+        academicId.removeChild(academicId.firstElementChild);
+
+    }
+    for (let i = 0; i < profiles[randNum].academic.length; i++) {
+        let li = document.createElement('li');
+        li.innerHTML = profiles[randNum].academic[i];
+        academicId.insertBefore(li, null);
+    }
+
+    //Teaching Exp
+    for (let i = 0; i = teachingId.childElementCount; i++) {
+        teachingId.removeChild(teachingId.firstElementChild);
+
+    }
+    for (let i = 0; i < profiles[randNum].teaching.length; i++) {
+        let li = document.createElement('li');
+        li.innerHTML = profiles[randNum].teaching[i];
+        teachingId.insertBefore(li, null);
+    }
+}
+function nextTo(){
+    console.log('forward')
+    history.forward();
+}
+function backTo(){
+    console.log('back')
+    history.back();
 }
