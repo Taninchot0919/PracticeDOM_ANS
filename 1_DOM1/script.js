@@ -31,7 +31,6 @@ appetizer.insertBefore(li, null);
 
 //1.5 change a classname of Tuna Sandwich to "seafood"
 console.log('ข้อ 1.5')
-//ทางเลือกที่ 1
 let appetizerIndex = appetizer.firstElementChild;
 for (let i = 0; i < appetizer.childElementCount; i++) {
     if (appetizerIndex.innerHTML == 'Tuna Sandwich') {
@@ -40,26 +39,6 @@ for (let i = 0; i < appetizer.childElementCount; i++) {
     }
     appetizerIndex = appetizerIndex.nextElementSibling;
 }
-
-//ทางเลือกที่ 2
-// for (let i = 0; i < menu.childElementCount; i++) {
-//     let appetizerIndex = appetizer.firstElementChild;
-//     let soupIndex = soup.firstElementChild;
-//     for (let i = 0; i < appetizer.childElementCount; i++) {
-//         if (appetizerIndex.innerHTML == 'Tuna Sandwich') {
-//             appetizerIndex.setAttribute('class', 'seafood');
-//             break;
-//         }
-//         appetizerIndex = appetizerIndex.nextElementSibling;
-//     }
-//     for (let i = 0; i < soup.childElementCount; i++) {
-//         if (soupIndex.innerHTML == 'Tuna Sandwich') {
-//             soupIndex.setAttribute('class', 'seafood');
-//             break;
-//         }
-//         soupIndex = soupIndex.nextElementSibling;
-//     }
-// }
 
 //1.6 insert a new list item "<li class="seafood">Shrimp-Corn Soup></li> before <li class="meat">Beef Soup</li>
 console.log('ข้อ 1.6')
