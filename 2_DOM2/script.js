@@ -71,20 +71,23 @@ let profiles = [
     }
 ];
 
+let lectId = document.getElementById('lect');
+let imgId = document.getElementById('img-container');
+let academicId = document.getElementById('academic');
+let teachingId = document.getElementById('teaching');
+let indexPerson = 0;
+let prevProfileIndex;
+
 
 //Show active current Person and move previous back to thumbnail
-let pichet = document.getElementById('pichet');
-let sanit = document.getElementById('sanit');
-let umaporn = document.getElementById('umaporn');
-let tisanai = document.getElementById('tisanai');
-
-// pichet.addEventListener("onclick", active_Person(1));
-// sanit.addEventListener("click",active_Person(2));
 
 //Show next person
-
+let nextButt = document.querySelector('.next-btn');
+nextButt.addEventListener('click', nextTo);
 
 //Show previous person
+let prevButt = document.querySelector('.prev-btn');
+prevButt.addEventListener('click', backTo);
 
 //Show random person
 let surpriseButton = document.querySelector('.surprised-btn');
@@ -113,25 +116,22 @@ function searchKub() {
 }
 
 function randomPerson() {
-    let randNum = Math.floor(Math.random() * 5);
-    console.log(randNum);
-    active_Person(randNum)
+    prevProfileIndex = indexPerson;
+    indexPerson = Math.floor(Math.random() * 5);
+    console.log(indexPerson);
+    addToThumbnail(prevProfileIndex, indexPerson);
+    active_Person(indexPerson)
 }
 
 function active_Person(number) {
-    let lectId = document.getElementById('lect');
-    let imgId = document.getElementById('img-container');
-    let academicId = document.getElementById('academic');
-    let teachingId = document.getElementById('teaching');
-
     lectId.innerHTML = profiles[number].lect;
     imgId.setAttribute('src', profiles[number].img);
 
     //Academic
     for (let i = 0; i = academicId.childElementCount; i++) {
         academicId.removeChild(academicId.firstElementChild);
-
     }
+
     for (let i = 0; i < profiles[number].academic.length; i++) {
         let li = document.createElement('li');
         li.innerHTML = profiles[number].academic[i];
@@ -143,6 +143,7 @@ function active_Person(number) {
         teachingId.removeChild(teachingId.firstElementChild);
 
     }
+
     for (let i = 0; i < profiles[number].teaching.length; i++) {
         let li = document.createElement('li');
         li.innerHTML = profiles[number].teaching[i];
@@ -151,24 +152,31 @@ function active_Person(number) {
 }
 
 function nextTo() {
-    console.log('forward')
-    history.forward();
+    prevProfileIndex = indexPerson;
+    indexPerson++;
+    if (indexPerson > profiles.length - 1) {
+        indexPerson = 0;
+    }
+    addToThumbnail(prevProfileIndex, indexPerson);
+    active_Person(indexPerson);
 }
 function backTo() {
-    console.log('back')
-    history.back();
+    prevProfileIndex = indexPerson;
+    indexPerson++;
+    if (indexPerson > profiles.length - 1) {
+        indexPerson = 0;
+    }
+    addToThumbnail(prevProfileIndex, indexPerson);
+    active_Person(indexPerson);
 }
 
-function array_move(arr, old_index, new_index) {
-    if (new_index >= arr.length) {
-        var k = new_index - arr.length + 1;
-        while (k--) {
-            arr.push(undefined);
-        }
-    }
-    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-    return arr; // for testing
-};
-// returns [2, 1, 3]
-// console.log(array_move(profiles, 0, 1));
-// console.log(array_move([1, 2, 3, 4, 5, 6, 7], 0, 2));
+
+function addToThumbnail(oldProfileIndex, currentProfileIndex) {
+    let replaceThumbnail = document.getElementById(profiles[currentProfileIndex].id);
+    let replaceLectQueryImg = replaceThumbnail.getElementsByTagName("img")[0];
+    let replaceLectQueryP = replaceThumbnail.getElementsByTagName("p")[0];
+    replaceLectQueryImg.src = profiles[oldProfileIndex].img;
+    replaceLectQueryP.textContent = profiles[oldProfileIndex].lect;
+    replaceThumbnail.id = profiles[oldProfileIndex].id;
+
+}
